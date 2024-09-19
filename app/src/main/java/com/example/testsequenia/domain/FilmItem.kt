@@ -1,5 +1,16 @@
 package com.example.testsequenia.domain
 
-import java.net.URL
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class FilmItem(val title: String, val imageURL: String)
+@Parcelize
+data class FilmItem(
+    val id: Long,
+    val localizedTitle: String?,
+    val title: String,
+    val year: Long,
+    val rating: Double?,
+    val imageURL: String?,
+    val description: String?,
+    val genres: List<String>,
+) : Parcelable

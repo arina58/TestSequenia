@@ -8,24 +8,49 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.example.testsequenia.R
 import com.example.testsequenia.domain.FilmItem
 
-class FilmsListAdapter (private val dataList: List<FilmItem>) :
+class FilmsListAdapter(private val dataList: List<FilmItem>) :
     RecyclerView.Adapter<FilmsListAdapter.FilmsViewHolder>() {
+
+    var itemClickListener: ((item: FilmItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
         return FilmsViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: FilmsViewHolder, position: Int) {
         val item = dataList[position]
 
-        holder.tvTitle.text = item.title
+        holder.tvTitle.text = item.localizedTitle ?: item.title
 
-        Glide.with(holder.itemView.context)
-            .load(Uri.parse(item.imageURL))
-            .into(holder.ivImage)
+        if (item.imageURL != null) {
+            Glide.with(holder.itemView.context)
+                .load(Uri.parse(item.imageURL))
+                .override(600, 900)
+                .apply(RequestOptions().transform(RoundedCorners(20)))
+                .error(
+                    Glide.with(holder.itemView.context)
+                        .load(R.drawable.default_poster)
+                        .override(1000, 1500)
+                        .apply(RequestOptions().transform(RoundedCorners(20)))
+                )
+                .into(holder.ivImage)
+        } else {
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.default_poster)
+                .override(600, 900)
+                .apply(RequestOptions().transform(RoundedCorners(20)))
+                .into(holder.ivImage)
+        }
+
+        holder.itemView.setOnClickListener {
+            itemClickListener?.invoke(item)
+        }
     }
 
     override fun getItemCount(): Int = dataList.size

@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">TestSequenia</string>
+
     <string name="genres_title">Жанры</string>
     <string name="films_title">Фильмы</string>
+
+    <string-array name="genres_and_year">
+        <item>,</item>
+        <item>год</item>
+    </string-array>
+
+    <string name="loading_error_description">Ошибка подключения сети</string>
+    <string name="loading_error_action_text">ПОВТОРИТЬ</string>
+
+    <string name="photo_poster_desc">Фото афиши фильма</string>
 </resources>

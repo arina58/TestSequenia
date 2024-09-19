@@ -6,17 +6,22 @@
     app:startDestination="@id/filmsFragment">
 
     <fragment
-        android:id="@+id/filmInfoFragment"
-        android:name="com.example.testsequenia.presentation.filmInfoFragment.FilmInfoFragment"
-        android:label="fragment_film_info"
-        tools:layout="@layout/fragment_film_info" />
-    <fragment
         android:id="@+id/filmsFragment"
         android:name="com.example.testsequenia.presentation.filmsFragment.FilmsFragment"
         android:label="fragment_films"
         tools:layout="@layout/fragment_films" >
         <action
             android:id="@+id/action_filmsFragment_to_filmInfoFragment"
-            app:destination="@id/filmInfoFragment" />
+            app:destination="@id/filmInfoFragment"
+            app:popUpTo="@id/filmsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmInfoFragment"
+        android:name="com.example.testsequenia.presentation.filmInfoFragment.FilmInfoFragment"
+        android:label="fragment_film_info"
+        tools:layout="@layout/fragment_film_info" >
+        <argument
+            android:name="filmItem"
+            app:argType="com.example.testsequenia.domain.FilmItem" />
     </fragment>
 </navigation>
