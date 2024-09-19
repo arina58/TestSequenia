@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -13,8 +14,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.testsequenia.R
 import com.example.testsequenia.domain.FilmItem
 
-class FilmsListAdapter(private val dataList: List<FilmItem>) :
-    RecyclerView.Adapter<FilmsListAdapter.FilmsViewHolder>() {
+class FilmsListAdapter : ListAdapter<FilmItem, FilmsListAdapter.FilmsViewHolder>(
+    FilmItemDiffCallback()
+) {
 
     var itemClickListener: ((item: FilmItem) -> Unit)? = null
 
@@ -24,7 +26,7 @@ class FilmsListAdapter(private val dataList: List<FilmItem>) :
     }
 
     override fun onBindViewHolder(holder: FilmsViewHolder, position: Int) {
-        val item = dataList[position]
+        val item = getItem(position)
 
         holder.tvTitle.text = item.localizedTitle ?: item.title
 
@@ -52,8 +54,6 @@ class FilmsListAdapter(private val dataList: List<FilmItem>) :
             itemClickListener?.invoke(item)
         }
     }
-
-    override fun getItemCount(): Int = dataList.size
 
     class FilmsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)

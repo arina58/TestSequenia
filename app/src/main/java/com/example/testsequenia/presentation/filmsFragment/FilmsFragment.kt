@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.testsequenia.R
 import com.example.testsequenia.databinding.FragmentFilmsBinding
-import com.example.testsequenia.domain.FilmItem
 import com.example.testsequenia.presentation.adapters.FilmsListAdapter
 import com.example.testsequenia.presentation.adapters.GenresListAdapter
 import com.google.android.material.appbar.MaterialToolbar
@@ -39,11 +37,15 @@ class FilmsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvFilms.layoutManager = GridLayoutManager(requireContext(), 2)
-
         val appBar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
         appBar.title = resources.getString(R.string.films_title)
         appBar.navigationIcon = null
+
+        val filmAdapter = FilmsListAdapter()
+        setFilmRv(filmAdapter)
+
+        val genresListAdapter = GenresListAdapter()
+        setGenreRv(genresListAdapter)
 
         lifecycleScope.launch {
             viewModel.state.collect {
@@ -71,30 +73,32 @@ class FilmsFragment : Fragment() {
                         binding.tvGenresTitle.visibility = VISIBLE
                         binding.progressBar.visibility = GONE
 
-                        viewModel.loadGenres(it.currencyList)
-
-                        setFilmRv(it.currencyList)
+                        filmAdapter.submitList(it.currencyList)
                     }
                 }
             }
         }
-
-        viewModel.genres.observe(viewLifecycleOwner) {
-            binding.rvGenres.adapter = GenresListAdapter(it)
-        }
-
     }
 
-    private fun setFilmRv(it: List<FilmItem>) {
-        val adapter = FilmsListAdapter(it)
+    private fun setGenreRv(adapter: GenresListAdapter) {
+        binding.rvGenres.adapter = adapter
+        adapter.itemClickListener = { genreItem ->
+            viewModel.filterFilms(genreItem)
+        }
+
+        viewModel.genres.observe(viewLifecycleOwner) {
+            adapter.submitList(it.toList())
+        }
+    }
+
+    private fun setFilmRv(adapter: FilmsListAdapter) {
         binding.rvFilms.adapter = adapter
+
         adapter.itemClickListener = { film ->
             findNavController().navigate(
                 FilmsFragmentDirections.actionFilmsFragmentToFilmInfoFragment(film)
             )
         }
-
-        binding.rvFilms.isNestedScrollingEnabled = false
     }
 
     override fun onDestroy() {
