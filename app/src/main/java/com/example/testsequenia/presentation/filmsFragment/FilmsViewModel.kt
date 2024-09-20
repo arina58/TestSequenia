@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testsequenia.data.RepositoryImpl
 import com.example.testsequenia.domain.FilmItem
 import com.example.testsequenia.domain.GenreItem
 import com.example.testsequenia.domain.useCase.GetFilmsUseCase
@@ -14,13 +13,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class FilmsViewModel : ViewModel() {
-
-
-    private val repository = RepositoryImpl()
-    private val getFilmsUseCase = GetFilmsUseCase(repository)
-    private val getGenresUseCase = GetGenresUseCase()
-    private val getFilteredFilmsUseCase = GetFilteredFilmsUseCase()
+class FilmsViewModel(
+    private val getFilmsUseCase: GetFilmsUseCase,
+    private val getGenresUseCase: GetGenresUseCase,
+    private val getFilteredFilmsUseCase: GetFilteredFilmsUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(State.Loading as State)
     val state = _state.asStateFlow()

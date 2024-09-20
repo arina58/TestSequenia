@@ -9,10 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class RepositoryImpl : Repository {
-
-    private val mapper = Mapper()
-
+class RepositoryImpl(
+    private val mapper: Mapper
+) : Repository {
 
     override suspend fun getFilms(): List<FilmItem>? {
         return withContext(Dispatchers.IO) {

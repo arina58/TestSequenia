@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testsequenia.R
@@ -20,6 +19,7 @@ import com.example.testsequenia.presentation.adapters.GenresListAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FilmsFragment : Fragment() {
 
@@ -27,7 +27,7 @@ class FilmsFragment : Fragment() {
     private val binding: FragmentFilmsBinding
         get() = _binding ?: throw RuntimeException("FragmentFilmInfoBinding == null")
 
-    private val viewModel: FilmsViewModel by viewModels()
+    private val viewModel: FilmsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

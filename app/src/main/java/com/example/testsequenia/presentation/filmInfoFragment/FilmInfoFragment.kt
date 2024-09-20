@@ -7,7 +7,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -26,8 +25,6 @@ class FilmInfoFragment : Fragment() {
     private val filmItem by lazy {
         FilmInfoFragmentArgs.fromBundle(requireArguments()).filmItem
     }
-
-    private val viewModel: FilmInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
