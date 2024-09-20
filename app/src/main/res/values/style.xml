@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="myAppTextTitle" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextColor">@color/white</item>
+        <item name="titleCentered">true</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="textRegular">
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="textMedium">
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="textBold">
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+</resources>

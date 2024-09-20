@@ -23,6 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Гренландия"
+        style="@style/textBold"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:paddingTop="8dp"

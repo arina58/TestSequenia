@@ -15,6 +15,7 @@
         android:textSize="16sp"
         android:paddingVertical="10dp"
         android:paddingHorizontal="16dp"
-        app:lineHeight="20sp"/>
+        app:lineHeight="20sp"
+        style="@style/textRegular"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -55,11 +58,7 @@ class FilmsFragment : Fragment() {
                         binding.tvGenresTitle.visibility = GONE
                         binding.progressBar.visibility = GONE
 
-                        Snackbar.make(view, resources.getString(R.string.loading_error_description), Snackbar.LENGTH_LONG)
-                            .setAction(resources.getString(R.string.loading_error_action_text)) {
-                                viewModel.refreshFilms()
-                            }
-                            .show()
+                        showError()
                     }
 
                     is State.Loading -> {
@@ -78,6 +77,29 @@ class FilmsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showError() {
+        val snackbar = Snackbar.make(
+            requireView(),
+            resources.getString(R.string.loading_error_description),
+            Snackbar.LENGTH_LONG
+        ).setAction(resources.getString(R.string.loading_error_action_text)) {
+            viewModel.refreshFilms()
+        }
+
+        val snackbarView = snackbar.view
+
+        val textView =
+            snackbarView.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        val actionView =
+            snackbarView.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
+
+        textView.typeface = ResourcesCompat.getFont(requireContext(), R.font.roboto_regular)
+        actionView.typeface = ResourcesCompat.getFont(requireContext(), R.font.roboto_medium)
+
+        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.yellow))
+        snackbar.show()
     }
 
     private fun setGenreRv(adapter: GenresListAdapter) {

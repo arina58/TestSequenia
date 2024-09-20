@@ -8,7 +8,7 @@ data class Root(
 
 data class FilmDbModel(
     val id: Long,
-    @SerializedName("localized_name") val localizedName: String?,
+    @SerializedName("localized_name") val localizedName: String,
     val name: String,
     val year: Long,
     val rating: Double?,

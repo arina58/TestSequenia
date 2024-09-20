@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,7 +43,7 @@ class FilmInfoFragment : Fragment() {
 
         val appBar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
 
-        appBar.title = filmItem.localizedTitle ?: filmItem.title
+        appBar.title = filmItem.localizedName
         appBar.setNavigationIcon(R.drawable.ic_back)
         appBar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -51,19 +52,29 @@ class FilmInfoFragment : Fragment() {
 
     private fun setFilmInfo() {
         setPoster()
-        binding.tvTitle.text = filmItem.localizedTitle ?: filmItem.title
+
+        binding.tvTitle.text = filmItem.localizedName
 
         binding.tvGenresAndYear.text = buildString {
-            append(filmItem.genres.joinToString())
-            append(resources.getStringArray(R.array.genres_and_year)[0])
-            append(" ")
+            if (filmItem.genres.isNotEmpty()) {
+                append(filmItem.genres.joinToString())
+                append(resources.getStringArray(R.array.genres_and_year)[0])
+                append(" ")
+            }
             append(filmItem.year)
             append(" ")
             append(resources.getStringArray(R.array.genres_and_year)[1])
         }
 
-        binding.tvRating.text = filmItem.rating.toString()
-        binding.tvDescription.text = filmItem.description
+        if (filmItem.rating == null)
+            binding.tvRating.visibility = GONE
+        else
+            binding.tvRating.text = filmItem.rating.toString()
+
+        if (filmItem.description == null)
+            binding.tvDescription.visibility = GONE
+        else
+            binding.tvDescription.text = filmItem.description
     }
 
     private fun setPoster() {

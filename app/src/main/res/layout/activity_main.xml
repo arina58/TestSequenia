@@ -17,13 +17,12 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            style="@style/myAppTextTitle"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:buttonGravity="center_vertical"
             app:navigationIcon="@drawable/ic_back"
-            app:title="@string/films_title"
-            app:titleCentered="true" />
+            app:title="@string/films_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

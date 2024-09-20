@@ -7,6 +7,7 @@ import com.example.testsequenia.domain.FilmItem
 import com.example.testsequenia.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class RepositoryImpl : Repository {
 
@@ -32,8 +33,11 @@ class RepositoryImpl : Repository {
                 Log.e(LOG_NAME, "Loading error: ${response.code()} - ${response.message()}")
                 null
             }
-        } catch (t: Throwable) {
-            Log.e(LOG_NAME, t.toString())
+        } catch (e: IOException) {
+            Log.e(LOG_NAME, "Network error: ${e.message}")
+            null
+        } catch (e: Exception) {
+            Log.e(LOG_NAME, "Unexpected error: ${e.message}")
             null
         }
     }

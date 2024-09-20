@@ -8,8 +8,8 @@ class Mapper {
     fun mapDbModelToEntity(filmDbModel: FilmDbModel): FilmItem {
         return FilmItem(
             id = filmDbModel.id,
-            localizedTitle = filmDbModel.localizedName,
-            title = filmDbModel.name,
+            localizedName = filmDbModel.localizedName,
+            name = filmDbModel.name,
             year = filmDbModel.year,
             rating = filmDbModel.rating,
             imageURL = filmDbModel.imageUrl,

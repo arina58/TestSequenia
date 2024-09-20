@@ -28,7 +28,7 @@ class FilmsListAdapter : ListAdapter<FilmItem, FilmsListAdapter.FilmsViewHolder>
     override fun onBindViewHolder(holder: FilmsViewHolder, position: Int) {
         val item = getItem(position)
 
-        holder.tvTitle.text = item.localizedTitle ?: item.title
+        holder.tvTitle.text = item.localizedName
 
         if (item.imageURL != null) {
             Glide.with(holder.itemView.context)

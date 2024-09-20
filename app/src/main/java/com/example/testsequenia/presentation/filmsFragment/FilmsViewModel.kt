@@ -36,7 +36,6 @@ class FilmsViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             loadFilms()
-            loadGenres(filmsData)
         }
     }
 
@@ -82,7 +81,8 @@ class FilmsViewModel : ViewModel() {
         val filmsOrNull = getFilmsUseCase()
 
         if (filmsOrNull != null) {
-            filmsData = filmsOrNull.toMutableList()
+            filmsData = filmsOrNull.sortedBy { it.localizedName }.toMutableList()
+            loadGenres(filmsData)
             _state.value = State.Content(filmsData)
         } else {
             _state.value = State.Error
