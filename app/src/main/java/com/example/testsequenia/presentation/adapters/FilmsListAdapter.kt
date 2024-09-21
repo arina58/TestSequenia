@@ -38,7 +38,7 @@ class FilmsListAdapter : ListAdapter<FilmItem, FilmsListAdapter.FilmsViewHolder>
                 .error(
                     Glide.with(holder.itemView.context)
                         .load(R.drawable.default_poster)
-                        .override(1000, 1500)
+                        .override(600, 900)
                         .apply(RequestOptions().transform(RoundedCorners(20)))
                 )
                 .into(holder.ivImage)
