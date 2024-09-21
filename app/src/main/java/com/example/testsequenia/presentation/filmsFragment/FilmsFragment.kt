@@ -20,6 +20,7 @@ import com.example.testsequenia.presentation.adapters.FilmsListAdapter
 import com.example.testsequenia.presentation.adapters.GenresListAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -85,7 +86,7 @@ class FilmsFragment : Fragment() {
         val snackbar = Snackbar.make(
             requireView(),
             resources.getString(R.string.loading_error_description),
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_INDEFINITE
         ).setAction(resources.getString(R.string.loading_error_action_text)) {
             viewModel.refreshFilms()
         }
@@ -102,6 +103,11 @@ class FilmsFragment : Fragment() {
 
         snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.yellow))
         snackbar.show()
+
+        lifecycleScope.launch {
+            delay(10000)
+            snackbar.dismiss()
+        }
     }
 
     private fun setGenreRv(adapter: GenresListAdapter) {

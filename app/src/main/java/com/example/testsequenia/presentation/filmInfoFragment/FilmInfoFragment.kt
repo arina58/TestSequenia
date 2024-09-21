@@ -40,7 +40,7 @@ class FilmInfoFragment : Fragment() {
 
         val appBar = requireActivity().findViewById<MaterialToolbar>(R.id.topAppBar)
 
-        appBar.title = filmItem.localizedName
+        appBar.title = filmItem.name
         appBar.setNavigationIcon(R.drawable.ic_back)
         appBar.setNavigationOnClickListener {
             findNavController().popBackStack()
