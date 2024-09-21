@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.testsequenia.R
 import com.example.testsequenia.databinding.FragmentFilmsBinding
 import com.example.testsequenia.presentation.adapters.FilmsListAdapter
@@ -115,11 +117,20 @@ class FilmsFragment : Fragment() {
 
     private fun setFilmRv(adapter: FilmsListAdapter) {
         binding.rvFilms.adapter = adapter
+        binding.rvFilms.nestedScrollTo(viewModel.currentPosition, binding.nestedScrollingView)
 
-        adapter.itemClickListener = { film ->
+        adapter.itemClickListener = { film, position ->
+            viewModel.saveCurrentPosition(position)
             findNavController().navigate(
                 FilmsFragmentDirections.actionFilmsFragmentToFilmInfoFragment(film)
             )
+        }
+    }
+
+    private fun RecyclerView.nestedScrollTo(position:Int, nestedScrollView: NestedScrollView) {
+        getChildAt(position)?.y?.let {
+            nestedScrollView.fling(0)
+            nestedScrollView.smoothScrollTo(0, it.toInt())
         }
     }
 

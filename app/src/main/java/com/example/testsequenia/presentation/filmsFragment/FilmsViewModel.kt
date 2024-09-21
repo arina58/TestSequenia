@@ -29,6 +29,13 @@ class FilmsViewModel(
     private lateinit var genresData: MutableList<GenreItem>
 
     private var currentGenrePosition = NOT_POSITION
+    private var _currentPosition: Int = 0
+    val currentPosition: Int
+        get() = _currentPosition
+
+    fun saveCurrentPosition(newPosition: Int) {
+        _currentPosition = newPosition
+    }
 
     init {
         viewModelScope.launch {

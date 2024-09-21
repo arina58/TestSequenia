@@ -18,7 +18,7 @@ class FilmsListAdapter : ListAdapter<FilmItem, FilmsListAdapter.FilmsViewHolder>
     FilmItemDiffCallback()
 ) {
 
-    var itemClickListener: ((item: FilmItem) -> Unit)? = null
+    var itemClickListener: ((item: FilmItem, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmsViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
@@ -51,7 +51,7 @@ class FilmsListAdapter : ListAdapter<FilmItem, FilmsListAdapter.FilmsViewHolder>
         }
 
         holder.itemView.setOnClickListener {
-            itemClickListener?.invoke(item)
+            itemClickListener?.invoke(item, position)
         }
     }
 
